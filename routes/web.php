@@ -22,7 +22,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //chekcout 
     Route::prefix('checkout')->controller(CheckoutController::class)->group((function()  {
         Route::post('order','store')->name('checkout.store');
         Route::get('success','success')->name('checkout.success');
@@ -38,7 +37,6 @@ Route::prefix('cart')->controller(CartController::class)->group(function () {
     Route::delete('delete/{product}','delete')->name('cart.delete');
 });
 
-//routes for products list and filter 
 Route::prefix('products')->controller(ProductListController::class)->group(function ()  {
     Route::get('/','index')->name('products.index');
     
@@ -57,7 +55,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'redirectAdmin'], function ()
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
-    //products routes 
     Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
     Route::post('/products/store',[ProductController::class,'store'])->name('admin.products.store');
     Route::put('/products/update/{id}',[ProductController::class,'update'])->name('admin.products.update');
@@ -65,7 +62,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/products/destory/{id}',[ProductController::class,'destory'])->name('admin.products.destory');
     
 });
-
-//end
 
 require __DIR__ . '/auth.php';

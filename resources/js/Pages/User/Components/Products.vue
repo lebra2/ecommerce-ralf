@@ -24,7 +24,7 @@ const addToCart = (product) => {
 </script>
 <template>
     <div
-        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 gap-4 h-screen lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 gap-4 lg:grid-cols-4 xl:gap-x-8"
     >
         <div
             v-for="product in products"
@@ -46,10 +46,8 @@ const addToCart = (product) => {
                     :alt="product.imageAlt"
                     class="h-full w-full object-cover object-center lg:h-full lg:w-full"
                 />
-
-                <!-- add to cart icon -->
                 <div
-                    class="absolute inset-0 flex items-center justify-center opacity-100 cursor-pointer"
+                    class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 cursor-pointer"
                 >
                     <div class="bg-blue-700 p-2 rounded-full">
                         <a @click="addToCart(product)">
@@ -93,7 +91,6 @@ const addToCart = (product) => {
                         </a>
                     </div> -->
                 </div>
-                <!-- end -->
             </div>
             <div class="mt-4 flex justify-between">
                 <div>
