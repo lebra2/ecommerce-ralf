@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('image');
             $table->unsignedBigInteger('product_id');
+            // Define the foreign key relationship and cascading delete
             $table->foreign('product_id')
-            ->references('id')
-            ->on('products')
-            ->onDelete('cascade');
+                ->references('id')
+                ->on('products')
+                ->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 

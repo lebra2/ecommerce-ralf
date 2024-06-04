@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\ProductListController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +15,7 @@ use Inertia\Inertia;
 
 
 Route::get('/', [UserController::class, 'index'])->name('home');
+Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -19,11 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //chekcout 
-    // Route::prefix('checkout')->controller(CheckoutController::class)->group((function()  {
-    //     Route::post('order','store')->name('checkout.store');
-    //     Route::get('success','success')->name('checkout.success');
-    //     Route::get('cancel','cancel')->name('checkout.cancel');
-    // }));
+    Route::prefix('checkout')->controller(CheckoutController::class)->group((function()  {
+        Route::post('order','store')->name('checkout.store');
+        Route::get('success','success')->name('checkout.success');
+        Route::get('cancel','cancel')->name('checkout.cancel');
+    }));
   
 });
 
@@ -35,10 +39,10 @@ Route::prefix('cart')->controller(CartController::class)->group(function () {
 });
 
 //routes for products list and filter 
-// Route::prefix('products')->controller(ProductListController::class)->group(function ()  {
-//     Route::get('/','index')->name('products.index');
+Route::prefix('products')->controller(ProductListController::class)->group(function ()  {
+    Route::get('/','index')->name('products.index');
     
-// });
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
