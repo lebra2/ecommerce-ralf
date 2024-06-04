@@ -15,6 +15,7 @@ class ProductController extends Controller
 {
     public function index()
     {
+
         $products = Product::with('category', 'brand', 'product_images')->get();
         $brands = Brand::get();
         $categories = Category::get();
@@ -68,7 +69,6 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
-        // dd($product);
         $product->title = $request->title;
         $product->price = $request->price;
         $product->quantity = $request->quantity;

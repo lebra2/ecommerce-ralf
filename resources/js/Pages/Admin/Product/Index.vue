@@ -1,18 +1,13 @@
-<script setup>
-
-import AdminLayout from '../Components/AdminLayout.vue'
-import ProductList from '../Product/ProductList.vue'
-
-</script>
-
-
 <template>
-
     <AdminLayout>
-        <ProductList>
-            
-        </ProductList>
-
+        <ProductList :products = "products" ></ProductList>
     </AdminLayout>
-
 </template>
+
+<script setup>
+defineProps({
+    products:Array
+})
+import AdminLayout from '../Components/AdminLayout.vue'
+import ProductList from './ProductList.vue'
+</script>
