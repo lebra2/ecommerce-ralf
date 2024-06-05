@@ -1,8 +1,9 @@
 <script setup>
-import { computed, reactive } from 'vue'
-
+import { computed, reactive } from 'vue';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 import UserLayout from './Layouts/UserLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
+import * as yup from 'yup';
 
 defineProps({
     userAddress: Object
@@ -31,6 +32,15 @@ const formFilled = computed(()=>{
     form.country_code !== null &&
     form.type !== null )
 })
+
+const schema = yup.object({
+  address1: yup.string().required(),
+  country_code: yup.string().required().max(3),
+  city: yup.string().required(),
+  state: yup.string().required().min(3),
+  zipcode: yup.string().required().min(5).max(5),
+  type: yup.string().required(),
+});
 
 
 
@@ -164,36 +174,42 @@ function submit() {
 
 
 
-                    <form @submit.prevent="submit">
+                    <Form @submit="submit" :validation-schema="schema">
                         <div class="relative mb-4">
                             <label for="name" class="leading-7 text-sm text-gray-600">Address 1</label>
-                            <input type="text" id="name" name="address1" v-model="form.address1"
-                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <Field type="text" id="name" name="address1"
+                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                                <ErrorMessage name="address1" class="text-red-500 text-danger"/>
                         </div>
                         <div class="relative mb-4">
                             <label for="email" class="leading-7 text-sm text-gray-600">City</label>
-                            <input type="text" id="email" name="city" v-model="form.city"
-                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <Field type="text" id="email" name="city"
+                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                                <ErrorMessage name="city" class="text-red-500  text-danger"/>
                         </div>
                         <div class="relative mb-4">
                             <label for="email" class="leading-7 text-sm text-gray-600">State</label>
-                            <input type="text" id="email" name="state" v-model="form.state"
-                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <Field type="text" id="email" name="state"
+                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                                <ErrorMessage name="state" class="text-red-500  text-danger"/>
                         </div>
                         <div class="relative mb-4">
                             <label for="email" class="leading-7 text-sm text-gray-600">Zipcode</label>
-                            <input type="text" id="email" name="zipcode" v-model="form.zipcode"
-                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <Field type="text" id="email" name="zipcode"
+                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                                <ErrorMessage name="zipcode" class="text-red-500 text-danger"/>
                         </div>
                         <div class="relative mb-4">
                             <label for="email" class="leading-7 text-sm text-gray-600">Country Code</label>
-                            <input type="text" id="email" name="countrycode" v-model="form.country_code"
-                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <Field type="text" id="email" name="country_code"
+                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                                <ErrorMessage name="country_code" class="text-red-500 text-danger"/>
                         </div>
                         <div class="relative mb-4">
                             <label for="email" class="leading-7 text-sm text-gray-600">Address type</label>
-                            <input type="text" id="email" name="type" v-model="form.type"
-                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <Field type="text" id="email" name="type"
+                                class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                                <ErrorMessage name="type" class="text-red-500 text-danger"/>
                         </div>
 
 
@@ -205,7 +221,7 @@ function submit() {
                             class="text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Add
                             Address to continue</button>
 
-                    </form>
+                    </Form>
 
                     <p class="text-xs text-gray-500 mt-3">Continue Shopping </p>
                 </div>

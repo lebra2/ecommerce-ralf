@@ -10,8 +10,7 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index ()
-
+    public function index()
     {
         $products = Product::with('brand', 'category', 'product_images')->orderBy('id')->limit(8)->get();
 
